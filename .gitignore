@@ -1,0 +1,9 @@
+.idea/
+composer.phar
+*~
+.DS_Store
+.DS_Store?
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db

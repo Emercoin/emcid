@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+<pre>
+    Welcome to Emercoin OAuth Server!
+
+    {% if is_granted('ROLE_USER') %}You have authenticated by `{{ token_storage.token.providerKey }}` as {{ app.user }}{% else %}You have authenticated as anon.{% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+
+    Application Environment: {{ app.environment }}
+
+    SSL: {{ app.request.secure }}
+    SSL Protocol: {{ app.request.server.get('SSL_PROTOCOL') }}
+    SSL Client Serial: {{ app.request.server.get('SSL_CLIENT_M_SERIAL')|lower }}
+    SSL Client Verify: {{ app.request.server.get('SSL_CLIENT_VERIFY') }}
+    SSL Client E-mail: {{ app.request.server.get('SSL_CLIENT_S_DN_Email')|lower }}
+
+    Client IP: {{ app.request.server.get('REMOTE_ADDR') }}
+
+    Server IP: {{ app.request.server.get('SERVER_ADDR') }}
+    Server Software: {{ app.request.server.get('SERVER_SOFTWARE') }}
+    {% endif %}
+
+    Have a nice day!
+</pre>
+{% endblock body %}
