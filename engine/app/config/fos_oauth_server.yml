@@ -1,0 +1,8 @@
+fos_oauth_server:
+    db_driver: orm       # Driver availables: orm, mongodb, or propel
+    client_class:        Emercoin\OAuthBundle\Entity\Client
+    access_token_class:  Emercoin\OAuthBundle\Entity\AccessToken
+    refresh_token_class: Emercoin\OAuthBundle\Entity\RefreshToken
+    auth_code_class:     Emercoin\OAuthBundle\Entity\AuthCode
+    service:
+        user_provider: certificate
