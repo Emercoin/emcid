@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"
+
+app/console cache:clear --env prod
+app/console assets:install --env prod
+app/console doctrine:schema:update --force --env prod
