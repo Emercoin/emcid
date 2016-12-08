@@ -2,6 +2,7 @@
 
 namespace Emercoin\OAuthBundle\Security\Providers;
 
+use Emercoin\OAuthBundle\Entity\User;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Security\UserProvider;
 use Symfony\Bridge\Monolog\Logger;
@@ -93,7 +94,25 @@ class CertificateProvider extends UserProvider
         $user = $this->userManager->findUserBy(['serial' => $serial]);
 
         if (!$user) {
-            throw new UsernameNotFoundException(sprintf('No user with certificate SN "%s" was found.', $serial));
+            /** @var User $user */
+            $user = $this->userManager->createUser();
+            if (strlen($this->server->get('SSL_CLIENT_S_DN_Email')) > 0) {
+                $user->setEmail($this->server->get('SSL_CLIENT_S_DN_Email'));
+                $user->setEmailCanonical($this->server->get('SSL_CLIENT_S_DN_Email'));
+                $user->setUsername($this->server->get('SSL_CLIENT_S_DN_Email'));
+                $user->setUsernameCanonical($this->server->get('SSL_CLIENT_S_DN_Email'));
+            } else {
+                $login = uniqid();
+                $user->setEmail($login.'@localhost.com');
+                $user->setEmailCanonical($login.'@localhost.com');
+                $user->setUsername($login.'@localhost.com');
+                $user->setUsernameCanonical($login.'@localhost.com');
+            }
+
+            $password = hash('sha256', uniqid("pass", true));
+            $user->setPassword($password);
+            $user->setEnabled(true);
+            $user->setSerial($serial);
         }
 
         return $user;
