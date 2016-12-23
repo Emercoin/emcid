@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>App edit</h2>
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <div>
+        <button id="add-another-uri">Add URI</button>
+    </div>
+    <input type="submit" value="Submit"/>
+    {{ form_end(edit_form) }}
+    <div>
+        {{ form_start(delete_form) }}
+        {{ form_end(delete_form) }}
+    </div>
+    <div>
+        <a href="{{ path('client_index') }}">Back to the list</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var uriCount = '{{ edit_form.redirect_uris|length }}';
+        jQuery(document).ready(function () {
+            jQuery('#emercoin_client_redirect_uris').wrapInner('<ul></ul>');
+            jQuery('#add-another-uri').click(function (e) {
+                e.preventDefault();
+                var prototype = jQuery('#emercoin_client_redirect_uris')
+                var uriList = prototype.find('ul');
+                var newWidget = prototype.attr('data-prototype');
+                newWidget = newWidget.replace(/__name__/g, uriCount);
+                uriCount++;
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(uriList);
+            });
+        });
+    </script>
+{% endblock javascripts %}

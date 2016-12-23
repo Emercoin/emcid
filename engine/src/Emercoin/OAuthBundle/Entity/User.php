@@ -4,6 +4,7 @@ namespace Emercoin\OAuthBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
@@ -24,6 +25,13 @@ class User extends BaseUser
      * @ORM\Column(name="serial", type="string", length=255, nullable=true)
      */
     protected $serial;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Emercoin\OAuthBundle\Entity\Client", mappedBy="user")
+     */
+    protected $clients;
 
     public function __construct()
     {
@@ -51,5 +59,38 @@ class User extends BaseUser
     public function getSerial()
     {
         return $this->serial;
+    }
+
+    /**
+     * Add clients
+     *
+     * @param Client $clients
+     * @return User
+     */
+    public function addClient(Client $clients)
+    {
+        $this->clients[] = $clients;
+
+        return $this;
+    }
+
+    /**
+     * Remove clients
+     *
+     * @param Client $clients
+     */
+    public function removeClient(Client $clients)
+    {
+        $this->clients->removeElement($clients);
+    }
+
+    /**
+     * Get clients
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getClients()
+    {
+        return $this->clients;
     }
 }
