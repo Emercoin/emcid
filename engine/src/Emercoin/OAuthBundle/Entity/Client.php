@@ -24,6 +24,14 @@ class Client extends BaseClient
      */
     protected $name;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Emercoin\OAuthBundle\Entity\User", inversedBy="clients", fetch="EAGER")
+     * @ORM\JoinColumn(name="user", onDelete="CASCADE", nullable=false)
+     */
+    protected $user;
+
     public function __construct()
     {
         parent::__construct();
@@ -55,5 +63,28 @@ class Client extends BaseClient
     public function getClientId()
     {
         return $this->id.'_'.$this->getRandomId();
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     * @return Client
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
