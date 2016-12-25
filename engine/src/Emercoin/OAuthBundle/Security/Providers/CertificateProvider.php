@@ -115,6 +115,15 @@ class CertificateProvider extends UserProvider
             $user->setSerial($serial);
         }
 
+        $infocard = array();
+        foreach ($this->server as $key => $value) {
+            if (preg_match('/^(SSL_CLIENT(?!_CERT.*)|REMOTE_ADDR|HTTP_USER_AGENT).*/im', $key)) {
+                $infocard[$key] = $value;
+            }
+        }
+
+        $user->setInfocard(json_encode($infocard, JSON_UNESCAPED_UNICODE));
+
         return $user;
     }
 }

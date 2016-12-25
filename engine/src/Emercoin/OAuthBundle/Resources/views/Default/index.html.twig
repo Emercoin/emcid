@@ -24,5 +24,7 @@
 
     Have a nice day!
 </pre>
-    {{ render(controller("EmercoinOAuthBundle:Client:index")) }}
+    {% if is_granted('ROLE_USER') %}
+        {{ render(controller("EmercoinOAuthBundle:Client:index")) }}
+    {% endif %}
 {% endblock body %}

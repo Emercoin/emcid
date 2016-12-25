@@ -27,6 +27,13 @@ class User extends BaseUser
     protected $serial;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="infocard", type="text", nullable=true)
+     */
+    protected $infocard;
+
+    /**
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Emercoin\OAuthBundle\Entity\Client", mappedBy="user")
@@ -92,5 +99,28 @@ class User extends BaseUser
     public function getClients()
     {
         return $this->clients;
+    }
+
+    /**
+     * Set infocard
+     *
+     * @param string $infocard
+     * @return User
+     */
+    public function setInfocard($infocard)
+    {
+        $this->infocard = $infocard;
+
+        return $this;
+    }
+
+    /**
+     * Get infocard
+     *
+     * @return string 
+     */
+    public function getInfocard()
+    {
+        return $this->infocard;
     }
 }

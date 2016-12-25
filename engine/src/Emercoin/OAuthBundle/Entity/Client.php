@@ -4,6 +4,7 @@ namespace Emercoin\OAuthBundle\Entity;
 
 use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -21,6 +22,8 @@ class Client extends BaseClient
      * @var string
      *
      * @ORM\Column(name="name", type="string", nullable=false)
+     *
+     * @Assert\NotBlank()
      */
     protected $name;
 
