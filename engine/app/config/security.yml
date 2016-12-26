@@ -51,6 +51,7 @@ security:
 #             form_login: ~
 #             http://symfony.com/doc/current/cookbook/security/form_login_setup.html
     access_control:
-        - { path: ^/, roles: [ ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY ], requires_channel: https }
+        - { path: ^/client, roles: [ ROLE_USER ]  }
         - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
         - { path: ^/api/v2/token, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: ^/, roles: [ ROLE_USER, IS_AUTHENTICATED_ANONYMOUSLY ], requires_channel: https }
