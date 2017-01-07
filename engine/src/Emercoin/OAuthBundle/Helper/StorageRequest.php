@@ -56,7 +56,7 @@ class StorageRequest
         $this->error = $rc['error'];
 
         if (!is_null($this->error)) {
-            throw new \ErrorException('Response error: '.$this->error);
+            throw new \ErrorException('EmercoinResponse error: '.$this->error['message']);
         }
 
         $this->data = $rc['result'];
