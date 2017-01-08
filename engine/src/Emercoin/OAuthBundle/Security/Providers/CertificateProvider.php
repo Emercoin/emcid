@@ -3,6 +3,7 @@
 namespace Emercoin\OAuthBundle\Security\Providers;
 
 use Emercoin\OAuthBundle\Entity\User;
+use Emercoin\OAuthBundle\Helper\InfoCardRequest;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Security\UserProvider;
 use Symfony\Bridge\Monolog\Logger;
@@ -91,6 +92,8 @@ class CertificateProvider extends UserProvider
             throw new UsernameNotFoundException('No user with such certificate SN');
         }
 
+        $infocardRequest = new InfoCardRequest('name_show', $this->server->get('SSL_CLIENT_S_DN_UID'), $this->dsn, $this->server);
+
         $user = $this->userManager->findUserBy(['serial' => $serial]);
 
         if (!$user) {
@@ -122,6 +125,7 @@ class CertificateProvider extends UserProvider
             }
         }
 
+        $infocard['infocard'] = $infocardRequest->getInfocard();
         $user->setInfocard(json_encode($infocard, JSON_UNESCAPED_UNICODE));
 
         return $user;

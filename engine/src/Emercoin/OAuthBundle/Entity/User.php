@@ -9,6 +9,27 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ *
+ * @ORM\AttributeOverrides({
+ *  @ORM\AttributeOverride(name="usernameCanonical",
+ *      column=@ORM\Column(
+ *          name = "username_canonical",
+ *          type = "string",
+ *          length = 180,
+ *          nullable = false,
+ *          unique = false
+ *      )
+ *  ),
+ *  @ORM\AttributeOverride(name="emailCanonical",
+ *      column=@ORM\Column(
+ *          name = "email_canonical",
+ *          type = "string",
+ *          length = 180,
+ *          nullable = false,
+ *          unique = false
+ *      )
+ *  )
+ * })
  */
 class User extends BaseUser
 {
@@ -22,7 +43,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="serial", type="string", length=255, nullable=true)
+     * @ORM\Column(name="serial", type="string", length=255, nullable=false, unique=true)
      */
     protected $serial;
 
@@ -61,7 +82,7 @@ class User extends BaseUser
     /**
      * Get serial
      *
-     * @return string 
+     * @return string
      */
     public function getSerial()
     {
@@ -94,7 +115,7 @@ class User extends BaseUser
     /**
      * Get clients
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getClients()
     {
@@ -117,7 +138,7 @@ class User extends BaseUser
     /**
      * Get infocard
      *
-     * @return string 
+     * @return string
      */
     public function getInfocard()
     {
