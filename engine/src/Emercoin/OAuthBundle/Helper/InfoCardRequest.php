@@ -37,10 +37,12 @@ class InfoCardRequest extends StorageRequest
         $this->service = $service;
         $this->passwd = $passwd;
         $this->server = $server;
-        $this->preValidate();
-        parent::__construct($method, ['info:'.$key, 'base64'], $dsn);
-        $this->deriveInfocard();
-        $this->afterValidate();
+        try {
+            $this->preValidate();
+            parent::__construct($method, ['info:'.$key, 'base64'], $dsn);
+            $this->afterValidate();
+            $this->deriveInfocard();
+        } catch (AccessDeniedHttpException $e) {}
     }
 
     /**
@@ -85,7 +87,6 @@ class InfoCardRequest extends StorageRequest
         $fh = fopen("/tmp/$cached_path", 'r');
         $k = '';
         $tpr = '_hash_'.getmypid().'_';
-        $ic = [];
         while (($buffer = fgets($fh, 4096)) !== false) {
             preg_match('/^(\S+)?(\s+)(.+)?/', $buffer, $matches);
             if (isset($matches[1]) && !empty($matches[1])) {
