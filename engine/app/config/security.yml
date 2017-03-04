@@ -28,6 +28,7 @@ security:
             pattern: ^/
             x509:
                 provider: certificate
+                user: 'SSL_CLIENT_M_SERIAL'
             anonymous: ~
 
         oauth_token:
@@ -38,6 +39,7 @@ security:
             pattern:    ^/oauth/v2/auth
             x509:
                 provider: certificate
+                user: 'SSL_CLIENT_M_SERIAL'
 
         api:
             pattern:    ^/api

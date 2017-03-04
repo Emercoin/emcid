@@ -30,6 +30,9 @@ class InfoCardRequest extends StorageRequest
      */
     function __construct($method, $params = [], $dsn, $server)
     {
+        if (!$params) {
+            return;
+        }
         list($service, $key, $passwd) =
             explode(':', preg_replace('/[^0-9A-Za-z_:]/', '', $params));
 
@@ -42,7 +45,8 @@ class InfoCardRequest extends StorageRequest
             parent::__construct($method, ['info:'.$key, 'base64'], $dsn);
             $this->afterValidate();
             $this->deriveInfocard();
-        } catch (AccessDeniedHttpException $e) {}
+        } catch (AccessDeniedHttpException $e) {
+        }
     }
 
     /**
