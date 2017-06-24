@@ -1,0 +1,23 @@
+<div style="margin: 0 auto; width: 70%;">
+    <h3>Application `{{ client.name }}` wants to get authorization by EMC SSL Certificate</h3>
+    <ul style="list-style: none outside;">
+        {% for key,value in app.request.server %}
+            {% if key matches '/^(SSL_CLIENT(?!_CERT.*)).*/im' %}
+                <li><strong>{{ key }}:</strong> {{ value }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <div style="text-align: center">
+        {{ form_start(form, {'method': 'POST', 'action': path('fos_oauth_server_authorize'), 'label_attr': {'class': 'fos_oauth_server_authorize'} }) }}
+        <input type="submit" name="accepted" value="{{ 'authorize.accept'|trans({}, 'FOSOAuthServerBundle') }}"/>
+        <input type="submit" name="rejected" value="{{ 'authorize.reject'|trans({}, 'FOSOAuthServerBundle') }}"/>
+    </div>
+
+    {{ form_row(form.client_id) }}
+    {{ form_row(form.response_type) }}
+    {{ form_row(form.redirect_uri) }}
+    {{ form_row(form.state) }}
+    {{ form_row(form.scope) }}
+    {{ form_rest(form) }}
+    </form>
+</div>

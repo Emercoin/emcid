@@ -1,19 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="container">
     <h1>App creation</h1>
 
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <div>
-        <button id="add-another-uri">Add URI</button>
+        <button class="btn btn-sm btn-default" id="add-another-uri">Add URI</button><br><br>
     </div>
-    <input type="submit" value="Create"/>
+    <input class="btn btn-success" type="submit" value="Create"/>
     {{ form_end(form) }}
 
     <div>
         <a href="{{ path('client_index') }}">Back to the list</a>
     </div>
+</div>
 {% endblock body %}
 
 {% block javascripts %}

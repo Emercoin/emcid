@@ -1,43 +1,32 @@
-{% extends 'base.html.twig' %}
-
 {% block body %}
-    <h2>My Apps</h2>
-    <table border="1px" cellpadding="10px" cellspacing="0">
-        <thead>
-        <tr>
-            <th>App Name</th>
-            <th>Client Id</th>
-            <th>Secret</th>
-            <th>URIs</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for client in clients %}
-            <tr>
-                <td>{{ client.name }}</td>
-                <td>{{ client.clientId }}</td>
-                <td>{{ client.secret }}</td>
-                <td>
-                    <ul style="padding: 0; margin: 0;">
+<link href="https://authorizer.io/themes/demo/assets/css/authorizer.css" rel="stylesheet">
+<div class="container">
+<h1>My Apps</h1>
+    <br>
+
+{% for client in clients %}
+        <div class="panel panel-auth">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ client.name }}</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="nod">
+                    <li><strong>Client Id:</strong> {{ client.clientId }}</li>
+                    <li><strong>Secret:</strong> {{ client.secret }}</li>
+                    <li><strong>URIs:</strong>
+                        <ul style="padding: 0; margin: 0;">
                         {% for uri in client.redirectUris %}
                             <li>{{ uri }}</li>
                         {% endfor %}
                     </ul>
-                </td>
-                <td>
-                    <div>
-                        <a href="{{ path('client_edit', { 'id': client.id }) }}">edit</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul style="list-style: none; padding: 0;">
-        <li>
-            <a href="{{ path('client_new') }}">Create a new App</a>
-        </li>
-    </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-footer"><a href="{{ path('client_edit', { 'id': client.id }) }}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> edit</a></div>
+        </div>
+{% endfor %}
+        <br>
+        <a class="btn btn-auth" href="{{ path('client_new') }}">Create a new App</a>
+</div>
+<br><br><br>
 {% endblock %}
