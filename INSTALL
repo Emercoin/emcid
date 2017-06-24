@@ -4,25 +4,25 @@
 create database emcid character set utf8;
 grant all on emcid.* to emcid@localhost identified by 'YOUR_NEW_MYSQL_PASSWORD';
 
-2. Cloning sources, activating Apache config:
+2. Certificates:
+mkdir -p /etc/ssl/emcid
+curl -sS https://raw.githubusercontent.com/Emercoin/emcweb/master/certs/emcssl_ca.crt > /etc/ssl/emcid/emcssl_ca.crt
+openssl req -nodes -x509 -newkey rsa:4096 -keyout /etc/ssl/emcid/emcid.key -out /etc/ssl/emcid/emcid.crt -days 3560 -subj /O=Emercoin/CN=emcid.local
+
+3. Cloning sources, activating Apache config:
 cd /var/www
 git clone https://github.com/Emercoin/emcid
 cp emcid/configs/apache/emcid.conf /etc/apache2/sites-available
 a2ensite emcid
 systemctl restart apache2
 
-3. Certificates:
-mkdir -p /etc/ssl/emcid
-curl -sS https://raw.githubusercontent.com/Emercoin/emcweb/master/certs/emcssl_ca.crt > /etc/ssl/emcid/emcssl_ca.crt
-openssl req -nodes -x509 -newkey rsa:4096 -keyout /etc/ssl/emcid/emcid.key -out /etc/ssl/emcid/emcid.crt -days 3560 -subj /O=Emercoin/CN=emcid.local
-
-
 4. Get the RPCPASSWORD from /etc/emercoin/emercoin.conf (it will be used by next step)
 
-5. App setup:
+5. Copy engine/app/config/parameters.yml.dist to engine/app/config/parameters.yml and then edit and update them
+
+6. App setup:
 emcid/engine/install-deps
 emcid/engine/update-content
-
 
 Attention!
 You have to run 'update-content' after every changing in /var/www/emcid made manually
